@@ -1,0 +1,19 @@
+{
+  "name": "store-skillset",
+  "version": "1.0.0",
+  "description": "Store skillset for lowbot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Truemedia/store-skillset.git"
+  },
+  "author": "Wade Penistone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Truemedia/store-skillset/issues"
+  },
+  "homepage": "https://github.com/Truemedia/store-skillset#readme"
+}
