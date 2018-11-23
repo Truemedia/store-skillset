@@ -1,0 +1,14 @@
+<speak>
+    {{#if products.length}}
+    <s>
+        {{_ 'Here is what I\'m offering:'}}
+        {{#each products}}
+            {{ this.name }}<break />
+        {{/each}}
+    </s>
+    {{else}}
+    <s>
+        {{_ 'I\'m not offering anything at the moment'}}
+    </s>
+    {{/if}}
+</speak>

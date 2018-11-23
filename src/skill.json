@@ -1,0 +1,6 @@
+{
+  "lexicons": {
+    "greeting": ["salutation-lex"],
+    "consent": ["consent-lex"]
+  }
+}

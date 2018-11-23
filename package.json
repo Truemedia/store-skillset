@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/Truemedia/store-skillset/issues"
   },
-  "homepage": "https://github.com/Truemedia/store-skillset#readme"
+  "homepage": "https://github.com/Truemedia/store-skillset#readme",
+  "dependencies": {
+    "data-bite": "^1.0.0",
+    "hightech": "^0.1.1",
+    "inquirer": "^6.2.0",
+    "pluralize": "^7.0.0"
+  }
 }
