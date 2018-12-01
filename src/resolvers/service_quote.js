@@ -3,13 +3,13 @@ const pluralize = require('pluralize');
 /**
   * @return {Promise}
   */
-module.exports = function(request, service, templater) {
-  let reqService = 'Library'; // TODO: Use request
+module.exports = function(req, dataService, templater) {
+  let {ServiceName} = req.inputData;
   let defaultCurrency = 'token';
   let currency = defaultCurrency;
 
-  return service.get('exchange', {
-    filter: {name: reqService, tags: 'Service'}
+  return dataService.get('exchange', {
+    filter: {name: ServiceName, tags: 'Service'}
   }).then(res => {
     let [service] = res.data;
     let rate = service.prices.find(price => (price.currency == currency)).amount;

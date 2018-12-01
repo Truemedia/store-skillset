@@ -20,6 +20,7 @@
     "data-bite": "^1.0.0",
     "hightech": "^0.1.1",
     "inquirer": "^6.2.0",
+    "payment-provider": "^0.1.3",
     "pluralize": "^7.0.0"
   }
 }

@@ -1,28 +1,48 @@
+const {Currency, Product, Service, Transaction} = require('payment-provider');
 const pluralize = require('pluralize');
 
 /**
   * @return {Promise}
   */
-module.exports = function(request, service, templater) {
-  // let {Amount} = request.inputData;
-  let Amount = 9;
-  let reqExchange = 'Library';
-  let defaultCurrency = 'token';
-  let currency = defaultCurrency;
+module.exports = function(req, dataService, templater, parties) {
+  let {ExchangeName} = req.inputData;
+  let amount = req.inputData.Amount;
+  let preferredCurrency = req.inputData.Currency;
+  preferredCurrency = pluralize.singular(preferredCurrency);
 
-  let filter = {name: reqExchange} // Derive from input
+  let currency = Currency.fromString('token');
+  let transaction = new Transaction(parties);
 
-  return service.get('exchange', {filter}).then(res => {
+  return dataService.get('exchange', {
+    filter: {name: ExchangeName}
+  }).then(res => { // Load product
     let [exchange] = res.data
-    let acceptAmount = exchange.prices.find(price => (price.currency == currency)).amount;
-    if (Amount >= acceptAmount) {
-      return templater.tpl('accept').compile();
-    } else {
-      let remainingAmount = (acceptAmount - Amount);
-      return templater.tpl('negotiate', {
-        remainingAmount, currency: pluralize(currency)
-      }).compile();
-    }
+    let product = Product.fromJson(exchange);
+    return product;
+  }).then(product => { // Process transaction
+    transaction = transaction.addProduct(product);
+    return transaction.purchase(currency);
+  }).then(transaction => { // Payment success
+    return templater.tpl('accept').compile();
   }).then(content => content.body)
-    .catch(err => console.error(err));
+    .catch(err => { // Issues/Errors
+      switch (err.code)
+      {
+        case 'PAYMENT_LACK_OF_FUNDS':
+          let responder = 'skill'; // skill/framework options (either can respond)
+          if (responder == 'skill') { // TODO: Make config option
+            let remainingAmount = transaction.fundsNeeded(currency);
+            return templater.tpl('negotiate', {
+              remainingAmount, currency: pluralize.plural(preferredCurrency)
+            }).compile()
+              .then(content => content.body);
+          } else {
+            throw err;
+          }
+        break;
+        default:
+          console.error(err);
+        break;
+      }
+    });
 };

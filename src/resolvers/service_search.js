@@ -1,8 +1,8 @@
 /**
   * @return {Promise}
   */
-module.exports = function(request, service, templater) {
-  return service.get('exchange', {
+module.exports = function(req, dataService, templater) {
+  return dataService.get('exchange', {
     filter: {tags: 'Service'}
   }).then(res => {
     let services = res.data;
