@@ -8,8 +8,8 @@ module.exports = function(req, dataService, templater) {
   let defaultCurrency = 'token';
   let currency = defaultCurrency;
 
-  let query = `{
-    service: allJsonApiexchange(limit: 1, filter: {name: {eq: "${ServiceName}"}, tags: {in: "Service"}}) {
+  let query = `query serviceQuote($ServiceName: String) {
+    service: allJsonApiexchange(limit: 1, filter: {name: {eq: $ServiceName}, tags: {in: "Service"}}) {
       edges {
         node {
           name
@@ -22,7 +22,7 @@ module.exports = function(req, dataService, templater) {
     }
   }`;
 
-  return dataService.request(query).then(data => {
+  return dataService.request(query, {ServiceName}).then(data => {
     let [service] = data.service.edges;
     let rate = service.node.prices.find(price => (price.currency == currency)).amount;
     let {name} = service.node;
