@@ -1,9 +1,9 @@
 <speak>
-    {{#if services.length }}
+    {{#if services.edges.length }}
     <s>
         {{_ 'Here is what I\'m offering:'}}
-        {{#each services}}
-            {{ this.name }}<break />
+        {{#each services.edges}}
+            {{ this.node.name }}<break />
         {{/each}}
     </s>
     {{else}}

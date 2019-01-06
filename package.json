@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Truemedia/store-skillset#readme",
   "dependencies": {
-    "data-bite": "^1.0.0",
+    "data-bite": "^2.1.0",
     "hightech": "^0.1.1",
     "inquirer": "^6.2.0",
     "payment-provider": "^0.1.3",
